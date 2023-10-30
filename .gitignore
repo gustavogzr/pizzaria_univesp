@@ -1,0 +1,14 @@
+key.txt
+*.pyc
+__pycache__/
+# *.sqlite3
+# *.env
+# local_settings.py
+#media/
+/venv/
+# /lib/
+# /include/
+# /bin/
+# *.log
+# staticfiles/
+# node_modules/
