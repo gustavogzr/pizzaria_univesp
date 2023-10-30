@@ -6,5 +6,29 @@
 
 {% block content %}
     <h1>escrever texto aqui</h1>
-    <p>incluir lista de pizzas de cada restaurante aqui</p>
+    <p>Lista das pizzas - {{ restaurante.nome }}</p>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Sabor</th>
+            <th scope="col">Ingredientes</th>
+            <th scope="col">Tamanhos</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for pizza in pizzas %}
+                <tr>
+                    <td>{{ pizza.nome }}</td>
+                    <td>{{ pizza.ingredientes }}</td>
+                    <td>
+                        <ul>
+                            {% for tamanho in pizza.tamanhos %}
+                                <li>{{ tamanho.nome }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}         
+        </tbody>
+      </table>
 {% endblock %}
