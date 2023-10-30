@@ -7,7 +7,11 @@ def index(request):
     return render(request, 'index.html')
 
 def restaurantes(request):
-    return render(request, 'restaurantes.html')
+    restaurantes = Restaurante.objects.all()
+    contexto = {
+        'restaurantes': restaurantes,
+    }
+    return render(request, 'restaurantes.html', contexto)
 
 def restaurante_pg(request, id):
     restaurante = get_object_or_404(Restaurante, id=id)

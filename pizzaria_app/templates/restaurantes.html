@@ -7,4 +7,26 @@
 {% block content %}
     <h1>escrever texto aqui</h1>
     <p>incluir lista de restaurantes aqui</p>
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Cidade</th>
+            <th scope="col">Pizzas</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for restaurante in restaurantes %}
+                <tr>
+                    <td>{{ restaurante.nome }}</td>
+                    <td>{{ restaurante.endereco }}</td>
+                    <td>{{ restaurante.cidade }}</td>
+                    <td><a href="/restaurante/{{ restaurante.id }}">Link para as pizzas</a></td>
+                </tr>
+            {% endfor %}         
+        </tbody>
+      </table>
+
 {% endblock %}
