@@ -13,6 +13,7 @@
             <th scope="col">Sabor</th>
             <th scope="col">Ingredientes</th>
             <th scope="col">Tamanhos</th>
+            <th scope="col">Link</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
                             {% endfor %}
                         </ul>
                     </td>
+                    <td><a href="/restaurante/{{pizza.restaurante.id}}/pizza/{{ pizza.id }}">Link para Pizza</a></td>
                 </tr>
             {% endfor %}         
         </tbody>

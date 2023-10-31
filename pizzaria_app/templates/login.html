@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Página de Login</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Página de Login</h1>
+    <div class="alert alert-success m-3" role="alert">
+        Você está logado com sucesso!
+    </div>
+    {% if user.is_authenticated %}
+        <div class="alert alert-success" role="alert">
+            Você está logado com sucesso!
+        </div>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="m-3">
+          <label for="username" class="form-label">Endereço de E-mail</label>
+          <input type="email" class="form-control" id="username" name="username" required aria-describedby="emailHelp">
+        </div>
+        <div class="m-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Enviar para Login</button>
+    </form>
+{% endblock %}

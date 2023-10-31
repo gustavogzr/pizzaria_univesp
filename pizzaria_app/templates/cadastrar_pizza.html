@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Cadastrar Pizza</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Inserir dados para cadastro de pizza</h1>
+    {% if mensagem_sucesso %}
+        <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+            {{mensagem_sucesso}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="m-3">
+          <label for="categoria" class="form-label">Categoria (Salgada, Doce, Especial...):</label>
+          <input type="text" class="form-control" id="categoria" name="categoria" required>
+        </div>
+        <div class="m-3">
+            <label for="nome" class="form-label">Nome da Pizza:</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        <div class="m-3">
+            <label for="descricao" class="form-label">Descrição da Pizza e seus ingredientes:</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" required>
+        </div>
+        <div class="m-3">
+            <label for="urlimagem" class="form-label">URL da imagem da pizza:</label>
+            <input type="text" class="form-control" id="urlimagem" name="urlimagem" required>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Enviar para Cadastro</button>
+    </form>
+{% endblock %}

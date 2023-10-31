@@ -7,4 +7,7 @@
 {% block content %}
     <h1>escrever texto aqui</h1>
     <p>incluir detalhes da pizza X do restaurante Y aqui</p>
+    <p>Local: {{ pizza.restaurante.nome }}</p>
+    <p>Pizza Sabor {{ pizza.nome }}</p>
+    <p>Ingredientes: {{ pizza.ingredientes }}</p>
 {% endblock %}

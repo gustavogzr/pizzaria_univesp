@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Cadastrar Pizza</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Inserir dados para cadastro de pizza</h1>
+    {% if mensagem_sucesso %}
+        <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+            {{mensagem_sucesso}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="m-3">
+            <label for="pizza" class="form-label">Pizza:</label>
+            <select class="form-select" id="pizza" name="pizza" required>
+                <option value="">Selecione uma pizza</option>
+                {% for pizza in pizzas %}
+                    <option value="{{pizza.id}}">{{pizza.nome}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="m-3">
+            <label for="pizzaria" class="form-label">Pizzaria:</label>
+            <select class="form-select" id="pizzaria" name="pizzaria" required>
+                <option value="">Selecione uma pizzaria</option>
+                {% for pizzaria in pizzarias %}
+                    <option value="{{pizzaria.id}}">{{pizzaria.nome}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="m-3">
+            <label for="preco" class="form-label">Preço em R$:</label>
+            <input type="number" class="form-control" id="preco" name="preco" required>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Enviar para Cadastro</button>
+    </form>
+{% endblock %}
