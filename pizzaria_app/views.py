@@ -30,9 +30,7 @@ def login(request):
         if response.status_code == 200:
             # Lidar com a resposta do back-end Java
             # (por exemplo, exibir uma mensagem de sucesso)
-            request.session['token'] = response.text
-
-            return HttpResponse("Solicitação enviada com sucesso!")
+            return render(request, 'login.html', {'mensagem_sucesso': 'Login realizado com sucesso!'})
         else:
             # Lidar com possíveis erros de solicitação
             return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
@@ -108,6 +106,38 @@ def cadastrar_pizzaria(request):
     return render(request, 'cadastrar_pizzaria.html')
 
 def cadastrar_pizza_pizzaria(request):
+    if request.method == 'POST':
+        # Dados para enviar ao back-end Java
+        data = {
+            "pizza": [{
+                    "id": request.POST.get('pizza'),
+                    "preco": request.POST.get('preco')
+                }],
+            "pizzaria": {
+                "id": request.POST.get('pizzaria')
+                }
+                }
+        token = request.session['token']
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+
+        # URL do endpoint no back-end Java
+        java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+
+        # Enviando os dados para o back-end Java usando Curl
+        response = requests.post(java_backend_url, json=data, headers=headers)
+
+        # Verificando a resposta
+        if response.status_code == 201:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+            return render(request, 'cadastrar_pizza_pizzaria.html', {'mensagem_sucesso': 'Solicitação enviada com sucesso!'})
+        else:
+            # Lidar com possíveis erros de solicitação
+            return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
+
     token = request.session['token']
     headers = {
         'Authorization': f'Bearer {token}',

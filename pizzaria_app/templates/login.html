@@ -5,14 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Página de Login</h1>
-    <div class="alert alert-success m-3" role="alert">
-        Você está logado com sucesso!
+    <h1 class="text-center mt-3">Página de Login</h1>
+    {% if mensagem_sucesso %}
+    <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+        {{mensagem_sucesso}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
     </div>
-    {% if user.is_authenticated %}
-        <div class="alert alert-success" role="alert">
-            Você está logado com sucesso!
-        </div>
     {% endif %}
     <form action="" method="post">
         {% csrf_token %}
