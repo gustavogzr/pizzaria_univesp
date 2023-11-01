@@ -30,6 +30,7 @@ def login(request):
         if response.status_code == 200:
             # Lidar com a resposta do back-end Java
             # (por exemplo, exibir uma mensagem de sucesso)
+            request.session['token'] = response.text
             return render(request, 'login.html', {'mensagem_sucesso': 'Login realizado com sucesso!'})
         else:
             # Lidar com possíveis erros de solicitação
