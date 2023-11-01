@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Página de Login</title>
+    <title>Login</title>
 {% endblock %}
 
 {% block content %}
-    <h1 class="text-center mt-3">Página de Login</h1>
+    <h1 class="text-center mt-3">Login</h1>
     {% if mensagem_sucesso %}
     <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
         {{mensagem_sucesso}}
@@ -22,6 +22,6 @@
           <label for="password" class="form-label">Senha</label>
           <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary m-3">Enviar para Login</button>
+        <button type="submit" class="btn btn-primary m-3">Login</button>
     </form>
 {% endblock %}

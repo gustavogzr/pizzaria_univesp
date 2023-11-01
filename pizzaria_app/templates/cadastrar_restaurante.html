@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Cadastrar Pizzaria</title>
+    <title>Cadastrar Restaurante</title>
 {% endblock %}
 
 {% block content %}
-    <h1 class="text-center mt-3">Inserir dados para cadastro de pizzaria/restaurante</h1>
+    <h1 class="text-center mt-3">Inserir dados para cadastro de restaurante</h1>
     {% if mensagem_sucesso %}
         <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
             {{mensagem_sucesso}}
@@ -15,11 +15,11 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="m-3">
-            <label for="nome" class="form-label">Nome Estabelecimento:</label>
+            <label for="nome" class="form-label">Nome do Restaurante:</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
         </div>
         <div class="m-3">
-          <label for="endereco" class="form-label">Endereço (rua/avenida, número, complemento, bairro):</label>
+          <label for="endereco" class="form-label">Endereço da Restaurante (rua/avenida, número, complemento, bairro):</label>
           <input type="text" class="form-control" id="endereco" name="endereco" required>
         </div>
         <div class="m-3">
