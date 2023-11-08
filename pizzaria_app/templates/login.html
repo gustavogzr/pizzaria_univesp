@@ -6,9 +6,15 @@
 
 {% block content %}
     <h1 class="text-center mt-3">Login</h1>
-    {% if mensagem_sucesso %}
+    {% if mensagem_login %}
     <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
-        {{mensagem_sucesso}}
+        {{mensagem_login}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    {% if mensagem_logout %}
+    <div class="alert alert-primary alert-dismissible fade show m-3" role="alert">
+        {{mensagem_logout}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
     </div>
     {% endif %}

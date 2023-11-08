@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from pizzaria_app.models import Restaurante, Pizza, Tamanho
 from django.http import HttpResponse
@@ -7,9 +7,12 @@ import json
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    contexto = {
+        'nome_usuario': request.session['nome_usuario'],
+    }
+    return render(request, 'index.html', contexto)
 
-def login(request):
+def login(request, redirect_from=None):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -31,23 +34,36 @@ def login(request):
             # Lidar com a resposta do back-end Java
             # (por exemplo, exibir uma mensagem de sucesso)
 #<<<<<<< HEAD
-                request.session['token'] = response.text
+                dados_usuario = json.loads(response.text)
+                request.session['nome_usuario'] = dados_usuario['nome']
+                request.session['token'] = dados_usuario['token']
+                request.session['usuarioId'] = dados_usuario['usuarioId']
+                request.session['list_roles_usuario'] = dados_usuario['listaRoles']
 #=======
  #           request.session['token'] = response.text
 #>>>>>>> 49c79cb558ca709dae0a1edae7c962f75cf6896a
-                return render(request, 'login.html', {'mensagem_sucesso': 'Login realizado com sucesso!'})
+                return redirect('/login/login')
         else:
             # Lidar com possíveis erros de solicitação
             return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
+    
+    contexto = {
+        'mensagem_logout': False,      
+    }
+    if redirect_from == 'login':
+        contexto['mensagem_login'] = 'Login realizado com sucesso!'
+    if redirect_from == 'logout':
+        contexto['mensagem_logout'] = 'Logout realizado com sucesso!'
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
 
-        return render(request, 'login.html')
+    return render(request, 'login.html', contexto)
 
-
-
-# Se esta linha está fora do contexto de tratamento de uma requisição,
-# deve ser repensada. Ela só deve ser alcançada se nenhuma das condições acima for verdadeira.
-#return render(request, 'login.html')
-
+def logout(request):
+    request.session.flush()
+    return redirect('/login/logout')
+    # return render(request, 'login.html', {'mensagem_logout': 'Logout realizado com sucesso!'})
+    
 
 def cadastrar_pizza(request):
     if request.method == 'POST':

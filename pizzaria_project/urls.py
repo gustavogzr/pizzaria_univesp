@@ -25,6 +25,8 @@ urlpatterns = [
     path('restaurante/<int:id>/pizza/<int:id_pizza>/', pizzaria_app_views.pizza_pg, name='pizza_pg'),
     #
     path('login/', pizzaria_app_views.login, name='login'),
+    path('login/<str:redirect_from>/', pizzaria_app_views.login, name='login'),
+    path('logout/', pizzaria_app_views.logout, name='logout'),
     path('cadastrar_pizza/', pizzaria_app_views.cadastrar_pizza, name='cadastrar_pizza'),
     path('cadastrar_pizzaria/', pizzaria_app_views.cadastrar_pizzaria, name='cadastrar_pizzaria'),
     path('cadastrar_pizza_pizzaria/', pizzaria_app_views.cadastrar_pizza_pizzaria, name='cadastrar_pizza_pizzaria')

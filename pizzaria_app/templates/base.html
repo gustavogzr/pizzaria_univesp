@@ -9,7 +9,7 @@
     <!-- Adicione aqui os links para seus arquivos CSS e JS -->
 </head>
 <body>
-<body style="background-color:red;"">
+<body style="background-color:white">
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
@@ -29,20 +29,31 @@
                     </ul>
                   </li>                  
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/restaurantes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Restaurantes
                     </a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="cadastrar_restaurante">Cadastrar</a></li>
                       <li><a class="dropdown-item" href="#">Consultar</a></li>
                     </ul>
-                  </li>
-                  
+                  </li> 
                 </ul>
                 <form class="d-flex" role="Pesquisar">
                   <input class="form-control me-2" type="Pesquisar" placeholder="Pesquisar" aria-label="Pesquisar">
                   <button class="btn btn-outline-success" type="submit">Pesquisar</button>
                 </form>
+                {% if nome_usuario is None %}
+                <a href="/login" class="btn btn-primary ms-2">Login</a>
+                {% else %}
+                <li class="nav-item dropdown d-flex ms-2">
+                  <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Olá, {{nome_usuario}}!
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                  </ul>
+                </li> 
+                {% endif %}
               </div>
             </div>
           </nav>
