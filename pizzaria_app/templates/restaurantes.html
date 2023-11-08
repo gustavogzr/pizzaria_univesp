@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>escrever texto aqui</h1>
-    <p>incluir lista de restaurantes aqui</p>
+    <h1>Pizza Comparator</h1>
+    <p>Restaurantes cadastrados</p>
 
     <table class="table table-striped">
         <thead>
@@ -23,7 +23,7 @@
                     <td>{{ restaurante.nome }}</td>
                     <td>{{ restaurante.endereco }}</td>
                     <td>{{ restaurante.cidade }}</td>
-                    <td><a href="/restaurante/{{ restaurante.id }}">Link para as pizzas</a></td>
+                    <td><a href="/restaurante/{{ restaurante.id }}">Visualizar pizza</a></td>
                 </tr>
             {% endfor %}         
         </tbody>
