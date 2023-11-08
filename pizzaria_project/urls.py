@@ -20,6 +20,7 @@ from pizzaria_app import views as pizzaria_app_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', pizzaria_app_views.index, name='index'),
+    
     path('restaurantes/', pizzaria_app_views.restaurantes, name='restaurantes'),
     path('restaurante/<int:id>/', pizzaria_app_views.restaurante_pg, name='restaurante_pg'),
     path('restaurante/<int:id>/pizza/<int:id_pizza>/', pizzaria_app_views.pizza_pg, name='pizza_pg'),
