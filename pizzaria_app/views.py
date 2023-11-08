@@ -188,6 +188,15 @@ def cadastrar_pizza_pizzaria(request):
     }
     return render(request, 'cadastrar_pizza_pizzaria.html', contexto)
 
+def listar_pizzas(request):
+    return render(request, 'listar_pizzas.html')
+
+def listar_pizzarias(request):
+    return render(request, 'listar_pizzarias.html')
+
+def listar_pizzas_pizzarias(request):
+    return render(request, 'listar_pizzas_pizzarias.html')
+
 def restaurantes(request):
     restaurantes = Restaurante.objects.all()
     contexto = {
