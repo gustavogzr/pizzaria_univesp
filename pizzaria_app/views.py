@@ -30,17 +30,24 @@ def login(request):
         if response.status_code == 200:
             # Lidar com a resposta do back-end Java
             # (por exemplo, exibir uma mensagem de sucesso)
-<<<<<<< HEAD
+#<<<<<<< HEAD
+                request.session['token'] = response.text
+#=======
  #           request.session['token'] = response.text
-=======
-            request.session['token'] = response.text
->>>>>>> 49c79cb558ca709dae0a1edae7c962f75cf6896a
-            return render(request, 'login.html', {'mensagem_sucesso': 'Login realizado com sucesso!'})
+#>>>>>>> 49c79cb558ca709dae0a1edae7c962f75cf6896a
+                return render(request, 'login.html', {'mensagem_sucesso': 'Login realizado com sucesso!'})
         else:
             # Lidar com possíveis erros de solicitação
             return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
 
-    return render(request, 'login.html')
+        return render(request, 'login.html')
+
+
+
+# Se esta linha está fora do contexto de tratamento de uma requisição,
+# deve ser repensada. Ela só deve ser alcançada se nenhuma das condições acima for verdadeira.
+#return render(request, 'login.html')
+
 
 def cadastrar_pizza(request):
     if request.method == 'POST':
