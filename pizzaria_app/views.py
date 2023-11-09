@@ -79,8 +79,6 @@ def cadastrar_pizza(request):
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json'
         }
-        print(data)
-        print(headers)
         # URL do endpoint no back-end Java
         java_backend_url = 'http://localhost:8080/v1/api/pizza'
 
@@ -133,7 +131,7 @@ def cadastrar_pizzaria(request):
         
     return render(request, 'cadastrar_pizzaria.html')
 
-def cadastrar_pizza_pizzaria(request):
+def cadastrar_pizza_pizzaria(request, redirect_from=None):
     if request.method == 'POST':
         # Dados para enviar ao back-end Java
         data = {
@@ -161,7 +159,7 @@ def cadastrar_pizza_pizzaria(request):
         if response.status_code == 201:
             # Lidar com a resposta do back-end Java
             # (por exemplo, exibir uma mensagem de sucesso)
-            return render(request, 'cadastrar_pizza_pizzaria.html', {'mensagem_sucesso': 'Solicitação enviada com sucesso!'})
+            return redirect('/cadastrar_pizza_pizzaria/cadastro_efetuado')
         else:
             # Lidar com possíveis erros de solicitação
             return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
@@ -186,16 +184,142 @@ def cadastrar_pizza_pizzaria(request):
         'pizzas': lista_pizzas,
         'pizzarias': lista_pizzarias,
     }
+    if redirect_from == 'cadastro_efetuado':
+        contexto['mensagem_sucesso'] = 'Cadastro realizado com sucesso!'
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
     return render(request, 'cadastrar_pizza_pizzaria.html', contexto)
 
-def listar_pizzas(request):
-    return render(request, 'listar_pizzas.html')
+def listar_pizzas(request, redirect_from=None):
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # Obter lista de pizzas cadastradas
+    java_backend_url = 'http://localhost:8080/v1/api/pizza'
+    response = requests.get(java_backend_url, headers=headers)
+    lista_pizzas = json.loads(response.text)
+    lista_pizzas.sort(key=lambda pizza: pizza['nome'].lower())
 
-def listar_pizzarias(request):
-    return render(request, 'listar_pizzarias.html')
+    contexto = {
+        'lista_pizzas': lista_pizzas,
+    }
+    if redirect_from == 'dados_atualizados':
+        contexto['mensagem_cadastro_atualizado'] = 'Dados atualizados com sucesso!'
+    if redirect_from == 'dados_excluidos':
+        contexto['mensagem_exclusao'] = 'Dados excluídos com sucesso!'
+    if redirect_from == 'erro_exclusao':
+        contexto['mensagem_erro_exclusao'] = 'Erro ao excluir dados!'
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
+    return render(request, 'listar_pizzas.html', contexto)
+
+def listar_pizzarias(request, redirect_from=None):
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # Obter lista de pizzas cadastradas
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaria'
+    response = requests.get(java_backend_url, headers=headers)
+    lista_pizzarias = json.loads(response.text)
+    lista_pizzarias.sort(key=lambda pizzaria: pizzaria['nome'].lower())
+
+    contexto = {
+        'lista_pizzarias': lista_pizzarias,
+    }
+    if redirect_from == 'dados_atualizados':
+        contexto['mensagem_cadastro_atualizado'] = 'Dados atualizados com sucesso!'
+    if redirect_from == 'dados_excluidos':
+        contexto['mensagem_exclusao'] = 'Dados excluídos com sucesso!'
+    if redirect_from == 'erro_exclusao':
+        contexto['mensagem_erro_exclusao'] = 'Erro ao excluir dados!'
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
+    return render(request, 'listar_pizzarias.html', contexto)
 
 def listar_pizzas_pizzarias(request):
     return render(request, 'listar_pizzas_pizzarias.html')
+
+def editar_pizza(request, id):
+    if request.method == 'POST':
+        data = {
+            'categoria': request.POST.get('categoria'),
+            'descricao': request.POST.get('descricao'),
+            'nome': request.POST.get('nome'),
+            'urlimagem': request.POST.get('urlimagem')
+        }
+        token = request.session['token']
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+        # URL do endpoint no back-end Java
+        java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+        print(data)
+        print(headers)
+        print(java_backend_url)
+        # Enviando os dados para o back-end Java usando Curl
+        response = requests.put(java_backend_url, json=data, headers=headers)
+        print(response)
+        print(response.text)
+
+        # Verificando a resposta
+        if response.status_code == 200:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+            return redirect('/listar_pizzas/dados_atualizados')
+        else:
+            # Lidar com possíveis erros de solicitação
+            return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
+    
+    # buscar dados da pizza no banco de dados
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # Obter dados da pizza com id informado
+    java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+    response = requests.get(java_backend_url, headers=headers)
+    dados_pizza = json.loads(response.text)
+    contexto = {
+        'dados_pizza': dados_pizza,
+    }
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
+    return render(request, 'editar_pizza.html', contexto)
+
+def editar_pizzaria(request, id):
+    return render(request, 'editar_pizzaria.html')
+
+def editar_pizza_pizzaria(request, id):
+    return render(request, 'editar_pizza_pizzaria.html')
+
+def excluir_pizza(request, id):
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # URL do endpoint no back-end Java
+    java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+    # Enviando os dados para o back-end Java usando Curl
+    response = requests.delete(java_backend_url, headers=headers)
+    if response.status_code == 200:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+        return redirect('/listar_pizzas/dados_excluidos')
+    if response.status_code == 400:
+        return redirect('/listar_pizzas/erro_exclusao')
+    else:
+        # Lidar com possíveis erros de solicitação
+        return HttpResponse("Erro ao enviar solicitação para o back-end Java.") 
+    
+
+def excluir_pizzaria(request, id):
+    return render(request, 'excluir_pizzaria.html')
+
+def excluir_pizza_pizzaria(request, id):
+    return render(request, 'excluir_pizza_pizzaria.html')
 
 def restaurantes(request):
     restaurantes = Restaurante.objects.all()

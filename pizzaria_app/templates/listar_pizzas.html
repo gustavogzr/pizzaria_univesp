@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Listar Pizzas</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Lista de todas as pizzas cadastradas</h1>
+    {% if mensagem_cadastro_atualizado %}
+    <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+        {{mensagem_cadastro_atualizado}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    {% if mensagem_exclusao %}
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+        {{mensagem_exclusao}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    {% if mensagem_erro_exclusao %}
+    <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+        {{mensagem_erro_exclusao}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    
+    
+    <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Foto</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pizza in lista_pizzas %}
+                    <tr>
+                        <td class="align-middle"><img src="{{ pizza.urlimagem }}" style="max-height: 40px;"></td>
+                        <td class="align-middle">{{ pizza.nome }}</td>
+                        <td class="align-middle">{{ pizza.categoria }}</td>
+                        <td class="align-middle">{{ pizza.descricao }}</td>
+                        <td class="align-middle text-center">
+                            <a href="/editar_pizza/{{pizza.id}}" class="btn btn-primary">Editar</a>
+                        </td>
+                        <td class="align-middle text-center">
+                            <a href="/excluir_pizza/{{pizza.id}}" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>Listar Pizzarias</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Lista de todas as pizzarias cadastradas</h1>
+    {% if mensagem_cadastro_atualizado %}
+    <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+        {{mensagem_cadastro_atualizado}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    {% if mensagem_exclusao %}
+    <div class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+        {{mensagem_exclusao}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    {% if mensagem_erro_exclusao %}
+    <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+        {{mensagem_erro_exclusao}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
+    
+    
+    <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Avaliação</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">CEP</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Site</th>
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pizzaria in lista_pizzarias %}
+                    <tr>
+                        <td class="align-middle text-center">{{pizzaria.avaliacao}}</td>
+                        <td class="align-middle">{{ pizzaria.nome }}</td>
+                        <td class="align-middle">{{ pizzaria.endereco }}</td>
+                        <td class="align-middle">{{ pizzaria.cidade }}</td>
+                        <td class="align-middle">{{pizzaria.cep}}</td>
+                        <td class="align-middle">{{pizzaria.telefone}}</td>
+                        <td class="align-middle"><a href="http://{{pizzaria.site}}" target="_blank">{{pizzaria.site}}</td>
+                        <td class="align-middle text-center">
+                            <a href="/editar_pizzaria/{{pizzaria.id}}" class="btn btn-primary">Editar</a>
+                        </td>
+                        <td class="align-middle text-center">
+                            <a href="/excluir_pizzaria/{{pizzaria.id}}" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}
