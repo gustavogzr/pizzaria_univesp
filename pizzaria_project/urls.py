@@ -44,6 +44,7 @@ urlpatterns = [
     path('cadastrar_pizza_pizzaria/', pizzaria_app_views.cadastrar_pizza_pizzaria, name='cadastrar_pizza_pizzaria'),
     path('cadastrar_pizza_pizzaria/<str:redirect_from>/', pizzaria_app_views.cadastrar_pizza_pizzaria, name='cadastrar_pizza_pizzaria_redirect'),
     path('listar_pizzas_pizzarias/', pizzaria_app_views.listar_pizzas_pizzarias, name='listar_pizzas_pizzarias'),
+    path('listar_pizzas_pizzarias/<str:redirect_from>/', pizzaria_app_views.listar_pizzas_pizzarias, name='listar_pizzas_pizzarias_redirect'),
     path('editar_pizza_pizzaria/<str:id>/', pizzaria_app_views.editar_pizza_pizzaria, name='editar_pizza_pizzaria_id'),
     path('excluir_pizza_pizzaria/<str:id>/', pizzaria_app_views.excluir_pizza_pizzaria, name='excluir_pizza_pizzaria_id'),
 ]

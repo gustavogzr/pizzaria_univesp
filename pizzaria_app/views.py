@@ -238,8 +238,29 @@ def listar_pizzarias(request, redirect_from=None):
         contexto['nome_usuario'] = request.session['nome_usuario']
     return render(request, 'listar_pizzarias.html', contexto)
 
-def listar_pizzas_pizzarias(request):
-    return render(request, 'listar_pizzas_pizzarias.html')
+def listar_pizzas_pizzarias(request, redirect_from=None):
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # Obter lista de pizzas cadastradas
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+    response = requests.get(java_backend_url, headers=headers)
+    lista_pizzaPizzarias = json.loads(response.text)
+    
+    #lista_pizzarias.sort(key=lambda pizzaria: pizzaria['nome'].lower())
+    contexto = {
+        'lista_pizzaPizzarias': lista_pizzaPizzarias,
+    }
+    if redirect_from == 'dados_atualizados':
+        contexto['mensagem_cadastro_atualizado'] = 'Dados atualizados com sucesso!'
+    if redirect_from == 'dados_excluidos':
+        contexto['mensagem_exclusao'] = 'Dados excluídos com sucesso!'
+    if redirect_from == 'erro_exclusao':
+        contexto['mensagem_erro_exclusao'] = 'Erro ao excluir dados!'
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
+    return render(request, 'listar_pizzas_pizzarias.html', contexto)
 
 def editar_pizza(request, id):
     if request.method == 'POST':
