@@ -311,7 +311,55 @@ def editar_pizza(request, id):
     return render(request, 'editar_pizza.html', contexto)
 
 def editar_pizzaria(request, id):
-    return render(request, 'editar_pizzaria.html')
+    if request.method == 'POST':
+        data = {
+            'avaliacao': 0,
+            'cep': request.POST.get('cep'),
+            'cidade': request.POST.get('cidade'),
+            'endereco': request.POST.get('endereco'),
+            'nome': request.POST.get('nome'),
+            'site': request.POST.get('site'),
+            'telefone': request.POST.get('telefone')
+        }
+        token = request.session['token']
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+        # URL do endpoint no back-end Java
+        java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+        print(data)
+        print(headers)
+        print(java_backend_url)
+        # Enviando os dados para o back-end Java usando Curl
+        response = requests.put(java_backend_url, json=data, headers=headers)
+        print(response)
+        print(response.text)
+
+        # Verificando a resposta
+        if response.status_code == 200:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+            return redirect('/listar_pizzarias/dados_atualizados')
+        else:
+            # Lidar com possíveis erros de solicitação
+            return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
+    
+    # buscar dados da pizza no banco de dados
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # Obter dados da pizza com id informado
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+    response = requests.get(java_backend_url, headers=headers)
+    dados_pizzaria = json.loads(response.text)
+    contexto = {
+        'dados_pizzaria': dados_pizzaria,
+    }
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
+    return render(request, 'editar_pizzaria.html', contexto)
 
 def editar_pizza_pizzaria(request, id):
     return render(request, 'editar_pizza_pizzaria.html')
@@ -337,10 +385,42 @@ def excluir_pizza(request, id):
     
 
 def excluir_pizzaria(request, id):
-    return render(request, 'excluir_pizzaria.html')
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # URL do endpoint no back-end Java
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+    # Enviando os dados para o back-end Java usando Curl
+    response = requests.delete(java_backend_url, headers=headers)
+    if response.status_code == 200:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+        return redirect('/listar_pizzarias/dados_excluidos')
+    if response.status_code == 400:
+        return redirect('/listar_pizzarias/erro_exclusao')
+    else:
+        # Lidar com possíveis erros de solicitação
+        return HttpResponse("Erro ao enviar solicitação para o back-end Java.") 
 
 def excluir_pizza_pizzaria(request, id):
-    return render(request, 'excluir_pizza_pizzaria.html')
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # URL do endpoint no back-end Java
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria/' + id
+    # Enviando os dados para o back-end Java usando Curl
+    response = requests.delete(java_backend_url, headers=headers)
+    if response.status_code == 200:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+        return redirect('/listar_pizzas_pizzarias/dados_excluidos')
+    if response.status_code == 400:
+        return redirect('/listar_pizzas_pizzarias/erro_exclusao')
+    else:
+        # Lidar com possíveis erros de solicitação
+        return HttpResponse("Erro ao enviar solicitação para o back-end Java.") 
 
 def restaurantes(request):
     restaurantes = Restaurante.objects.all()

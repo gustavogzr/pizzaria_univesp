@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Editar Pizzaria</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Editar os dados cadastrados da pizzaria</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="m-3">
+            <label for="nome" class="form-label">Nome Estabelecimento:</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{dados_pizzaria.nome}}" required>
+        </div>
+        <div class="m-3">
+          <label for="endereco" class="form-label">Endereço (rua/avenida, número, complemento, bairro):</label>
+          <input type="text" class="form-control" id="endereco" name="endereco" value="{{dados_pizzaria.endereco}}" required>
+        </div>
+        <div class="m-3">
+            <label for="cidade" class="form-label">Cidade/Estado:</label>
+            <input type="text" class="form-control" id="cidade" name="cidade" value="{{dados_pizzaria.cidade}}" required>
+        </div>
+        <div class="m-3">
+            <label for="cep" class="form-label">CEP (formato 00000-000):</label>
+            <input type="text" class="form-control" id="cep" name="cep" value="{{dados_pizzaria.cep}}" required>
+        </div>
+        <div class="m-3">
+            <label for="telefone" class="form-label">Telefone de Contato (formato (00)00000-0000):</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" value="{{dados_pizzaria.telefone}}" required>
+        </div>
+        <div class="m-3">
+            <label for="site" class="form-label">Site (URL):</label>
+            <input type="text" class="form-control" id="site" name="site" value="{{dados_pizzaria.site}}" required>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Atualizar Cadastro</button>
+    </form>
+{% endblock %}

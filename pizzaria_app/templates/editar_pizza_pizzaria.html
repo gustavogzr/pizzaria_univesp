@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Editar Pizza e Pizzaria</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Editar os dados cadastrados da relação pizza, pizzaria e preço</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="m-3">
+            <label for="pizza" class="form-label">Pizza:</label>
+            <select class="form-select" id="pizza" name="pizza" required>
+                <option value="">Selecione uma pizza</option>
+                {% for pizza in pizzas %}
+                    <option value="{{pizza.id}}">{{pizza.nome}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="m-3">
+            <label for="pizzaria" class="form-label">Pizzaria:</label>
+            <select class="form-select" id="pizzaria" name="pizzaria" required>
+                <option value="">Selecione uma pizzaria</option>
+                {% for pizzaria in pizzarias %}
+                    <option value="{{pizzaria.id}}">{{pizzaria.nome}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="m-3">
+            <label for="preco" class="form-label">Preço em R$:</label>
+            <input type="number" class="form-control" id="preco" name="preco" required>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Enviar para Cadastro</button>
+    </form>
+{% endblock %}
