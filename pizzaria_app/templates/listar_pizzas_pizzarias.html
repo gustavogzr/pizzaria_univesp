@@ -34,6 +34,7 @@
                 <tr>
                     <th scope="col">Pizza</th>
                     <th scope="col">Categoria</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col">Pizzaria</th>
                     <th scope="col">Cidade</th>
                     <th scope="col">Preço</th>
@@ -46,6 +47,7 @@
                     <tr>
                         <td class="align-middle">{{ pizzaPizzaria.pizza.nome }}</td>
                         <td class="align-middle">{{ pizzaPizzaria.pizza.categoria }}</td>
+                        <td class="align-middle">{{ pizzaPizzaria.pizza.descricao }}</td>
                         <td class="align-middle">{{ pizzaPizzaria.pizzaria.nome }}</td>
                         <td class="align-middle">{{ pizzaPizzaria.pizzaria.cidade }}</td>
                         <td class="align-middle">R$ {{ pizzaPizzaria.preco |floatformat:2 }}</td>
