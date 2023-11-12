@@ -6,6 +6,13 @@
 
 {% block content %}
     <h1 class="text-center mt-3">Lista de todas as pizzas e pizzarias cadastradas com preço</h1>
+    
+    {% if mensagem_login %}
+    <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+        {{mensagem_login}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+    {% endif %}
     {% if mensagem_cadastro_atualizado %}
     <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
         {{mensagem_cadastro_atualizado}}
@@ -24,6 +31,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
     </div>
     {% endif %}
+
+
+
+
+    
     
     <div class="m-3">
     <input class="form-control" id="myInput" type="text" placeholder="Pesquisar">

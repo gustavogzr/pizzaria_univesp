@@ -11,7 +11,7 @@
         {% csrf_token %}
         <div class="m-3">
             <label for="pizza" class="form-label">Pizza:</label>
-            <select class="form-select" id="pizza" name="pizza" required>
+            <select class="form-select" id="pizza" name="pizza" required disabled>
                 <option value="{{dados_pizzaPizzaria.pizza.id}}">{{dados_pizzaPizzaria.pizza.nome}}</option>
                 {% for pizza in pizzas %}
                     <option value="{{pizza.id}}">{{pizza.nome}}</option>
@@ -21,7 +21,7 @@
 
         <div class="m-3">
             <label for="pizzaria" class="form-label">Pizzaria:</label>
-            <select class="form-select" id="pizzaria" name="pizzaria" required>
+            <select class="form-select" id="pizzaria" name="pizzaria" required disabled>
                 <option value="{{dados_pizzaPizzaria.pizzaria.id}}">{{dados_pizzaPizzaria.pizzaria.nome}}</option>
                 {% for pizzaria in pizzarias %}
                     <option value="{{pizzaria.id}}">{{pizzaria.nome}}</option>

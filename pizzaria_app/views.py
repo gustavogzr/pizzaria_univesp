@@ -43,16 +43,11 @@ def login(request, redirect_from=None):
         if response.status_code == 200:
             # Lidar com a resposta do back-end Java
             # (por exemplo, exibir uma mensagem de sucesso)
-#<<<<<<< HEAD
                 dados_usuario = json.loads(response.text)
                 request.session['nome_usuario'] = dados_usuario['nome']
                 request.session['token'] = dados_usuario['token']
                 request.session['usuarioId'] = dados_usuario['usuarioId']
-                request.session['list_roles_usuario'] = dados_usuario['listaRoles']
-#=======
- #           request.session['token'] = response.text
-#>>>>>>> 49c79cb558ca709dae0a1edae7c962f75cf6896a
-                return redirect('/login/login')
+                return redirect('/listar_pizzas_pizzarias/login')
         else:
             # Lidar com possíveis erros de solicitação
             return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
@@ -283,6 +278,8 @@ def listar_pizzas_pizzarias(request, redirect_from=None):
         contexto['mensagem_exclusao'] = 'Dados excluídos com sucesso!'
     if redirect_from == 'erro_exclusao':
         contexto['mensagem_erro_exclusao'] = 'Erro ao excluir dados!'
+    if redirect_from == 'login':
+        contexto['mensagem_login'] = 'Login realizado com sucesso!'
     if 'nome_usuario' in request.session:
         contexto['nome_usuario'] = request.session['nome_usuario']
     return render(request, 'listar_pizzas_pizzarias.html', contexto)
@@ -378,15 +375,25 @@ def editar_pizzaria(request, id):
 
 def editar_pizza_pizzaria(request, id):
     if request.method == 'POST':
+        # data = {
+        #     "pizza": [{
+        #             "id": request.POST.get('pizza'),
+        #             "preco": request.POST.get('preco')
+        #         }],
+        #     "pizzaria": {
+        #         "id": request.POST.get('pizzaria')
+        #         }
+        #         }
         data = {
-            "pizza": [{
+            "pizza": {
                     "id": request.POST.get('pizza'),
-                    "preco": request.POST.get('preco')
-                }],
+                },
             "pizzaria": {
                 "id": request.POST.get('pizzaria')
+                },
+            "preco": request.POST.get('preco')
                 }
-                }
+        print(data)
         token = request.session['token']
         headers = {
             'Authorization': f'Bearer {token}',
