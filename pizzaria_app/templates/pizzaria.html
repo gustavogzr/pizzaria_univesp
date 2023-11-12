@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>{{ dados_pizzaria.nome }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-3">Lista de pizzas de {{ dados_pizzaria.nome }}</h1>
+    <h5 class="text-center text-muted">Endereço: {{ dados_pizzaria.endereco }} ; Cidade: {{ dados_pizzaria.cidade }} ; CEP: {{ dados_pizzaria.cep }}</h5>
+    <h5 class="text-center text-muted">Telefone: {{ dados_pizzaria.telefone }} / Site: <a href="http://{{dados_pizzaria.site}}" target="_blank">{{dados_pizzaria.site}}</a></h5>
+    
+    <div class="m-3">
+    <input class="form-control" id="myInput" type="text" placeholder="Pesquisar">
+    <br>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Foto</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pizzaPizzaria in lista_pizzaPizzarias %}
+                    <tr>
+                        <td class="align-middle"><img src="{{ pizzaPizzaria.pizza.urlimagem }}" style="max-height: 40px;"></td>
+                        <td class="align-middle"><a href="/pizza/{{pizzaPizzaria.pizza.id}}">{{ pizzaPizzaria.pizza.nome }}</a></td>
+                        <td class="align-middle">{{ pizzaPizzaria.pizza.categoria }}</td>
+                        <td class="align-middle">{{ pizzaPizzaria.pizza.descricao }}</td>
+                        <td class="align-middle">R$ {{ pizzaPizzaria.preco |floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const input = document.getElementById("myInput");
+        const table = document.querySelector("tbody"); // "table"
+        const rows = table.getElementsByTagName("tr");
+
+        input.addEventListener("keyup", function() {
+            const filter = input.value.toLowerCase();
+    
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                let found = false;
+                for (let j = 0; j < cells.length; j++) {
+                    const cell = cells[j];
+                    if (cell.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = found ? "" : "none";
+            }
+        });
+    </script>
+{% endblock %}

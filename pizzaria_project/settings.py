@@ -26,7 +26,7 @@ with open(os.path.join(BASE_DIR, 'key.txt')) as f:
     f.close()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 

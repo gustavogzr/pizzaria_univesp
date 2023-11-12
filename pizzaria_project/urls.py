@@ -20,10 +20,6 @@ from pizzaria_app import views as pizzaria_app_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', pizzaria_app_views.index, name='index'),
-    
-    path('restaurantes/', pizzaria_app_views.restaurantes, name='restaurantes'),
-    path('restaurante/<int:id>/', pizzaria_app_views.restaurante_pg, name='restaurante_pg'),
-    path('restaurante/<int:id>/pizza/<int:id_pizza>/', pizzaria_app_views.pizza_pg, name='pizza_pg'),
     #
     path('login/', pizzaria_app_views.login, name='login'),
     path('login/<str:redirect_from>/', pizzaria_app_views.login, name='login_id'),
@@ -34,12 +30,14 @@ urlpatterns = [
     path('listar_pizzas/<str:redirect_from>/', pizzaria_app_views.listar_pizzas, name='listar_pizzas_redirect'),
     path('editar_pizza/<str:id>/', pizzaria_app_views.editar_pizza, name='editar_pizza_id'),
     path('excluir_pizza/<str:id>/', pizzaria_app_views.excluir_pizza, name='excluir_pizza_id'),
+    path('pizza/<str:id>/', pizzaria_app_views.pizza, name='pizza'),
 
     path('cadastrar_pizzaria/', pizzaria_app_views.cadastrar_pizzaria, name='cadastrar_pizzaria'),
     path('listar_pizzarias/', pizzaria_app_views.listar_pizzarias, name='listar_pizzarias'),
     path('listar_pizzarias/<str:redirect_from>/', pizzaria_app_views.listar_pizzarias, name='listar_pizzarias_redirect'),
     path('editar_pizzaria/<str:id>/', pizzaria_app_views.editar_pizzaria, name='editar_pizzaria_id'),
     path('excluir_pizzaria/<str:id>/', pizzaria_app_views.excluir_pizzaria, name='excluir_pizzaria_id'),
+    path('pizzaria/<str:id>/', pizzaria_app_views.pizzaria, name='pizzaria'),
 
     path('cadastrar_pizza_pizzaria/', pizzaria_app_views.cadastrar_pizza_pizzaria, name='cadastrar_pizza_pizzaria'),
     path('cadastrar_pizza_pizzaria/<str:redirect_from>/', pizzaria_app_views.cadastrar_pizza_pizzaria, name='cadastrar_pizza_pizzaria_redirect'),

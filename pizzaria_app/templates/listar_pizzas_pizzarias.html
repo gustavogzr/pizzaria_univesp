@@ -45,10 +45,10 @@
             <tbody>
                 {% for pizzaPizzaria in lista_pizzaPizzarias %}
                     <tr>
-                        <td class="align-middle">{{ pizzaPizzaria.pizza.nome }}</td>
+                        <td class="align-middle"><a href="/pizza/{{ pizzaPizzaria.pizza.id }}">{{ pizzaPizzaria.pizza.nome }}</a></td>
                         <td class="align-middle">{{ pizzaPizzaria.pizza.categoria }}</td>
                         <td class="align-middle">{{ pizzaPizzaria.pizza.descricao }}</td>
-                        <td class="align-middle">{{ pizzaPizzaria.pizzaria.nome }}</td>
+                        <td class="align-middle"><a href="/pizzaria/{{ pizzaPizzaria.pizzaria.id }}">{{ pizzaPizzaria.pizzaria.nome }}</a></td>
                         <td class="align-middle">{{ pizzaPizzaria.pizzaria.cidade }}</td>
                         <td class="align-middle">R$ {{ pizzaPizzaria.preco |floatformat:2 }}</td>
                         <td class="align-middle text-center">

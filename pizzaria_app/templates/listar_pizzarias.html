@@ -31,7 +31,6 @@
     <table class="table">
             <thead>
                 <tr>
-                    <th scope="col" class="text-center">Avaliação</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Endereço</th>
                     <th scope="col">Cidade</th>
@@ -45,8 +44,7 @@
             <tbody>
                 {% for pizzaria in lista_pizzarias %}
                     <tr>
-                        <td class="align-middle text-center">{{pizzaria.avaliacao}}</td>
-                        <td class="align-middle">{{ pizzaria.nome }}</td>
+                        <td class="align-middle"><a href="/pizzaria/{{pizzaria.id}}">{{ pizzaria.nome }}</a></td>
                         <td class="align-middle">{{ pizzaria.endereco }}</td>
                         <td class="align-middle">{{ pizzaria.cidade }}</td>
                         <td class="align-middle">{{pizzaria.cep}}</td>
