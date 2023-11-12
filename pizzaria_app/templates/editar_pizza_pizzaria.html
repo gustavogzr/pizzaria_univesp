@@ -12,7 +12,7 @@
         <div class="m-3">
             <label for="pizza" class="form-label">Pizza:</label>
             <select class="form-select" id="pizza" name="pizza" required>
-                <option value="">Selecione uma pizza</option>
+                <option value="{{dados_pizzaPizzaria.pizza.id}}">{{dados_pizzaPizzaria.pizza.nome}}</option>
                 {% for pizza in pizzas %}
                     <option value="{{pizza.id}}">{{pizza.nome}}</option>
                 {% endfor %}
@@ -22,7 +22,7 @@
         <div class="m-3">
             <label for="pizzaria" class="form-label">Pizzaria:</label>
             <select class="form-select" id="pizzaria" name="pizzaria" required>
-                <option value="">Selecione uma pizzaria</option>
+                <option value="{{dados_pizzaPizzaria.pizzaria.id}}">{{dados_pizzaPizzaria.pizzaria.nome}}</option>
                 {% for pizzaria in pizzarias %}
                     <option value="{{pizzaria.id}}">{{pizzaria.nome}}</option>
                 {% endfor %}
@@ -30,8 +30,8 @@
         </div>
         <div class="m-3">
             <label for="preco" class="form-label">Preço em R$:</label>
-            <input type="number" class="form-control" id="preco" name="preco" required>
+            <input type="number" class="form-control" id="preco" name="preco" value="{{dados_pizzaPizzaria.preco}}" required>
         </div>
-        <button type="submit" class="btn btn-primary m-3">Enviar para Cadastro</button>
+        <button type="submit" class="btn btn-primary m-3">Atualizar Cadastro</button>
     </form>
 {% endblock %}

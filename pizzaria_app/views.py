@@ -378,7 +378,71 @@ def editar_pizzaria(request, id):
     return render(request, 'editar_pizzaria.html', contexto)
 
 def editar_pizza_pizzaria(request, id):
-    return render(request, 'editar_pizza_pizzaria.html')
+    if request.method == 'POST':
+        data = {
+            "pizza": [{
+                    "id": request.POST.get('pizza'),
+                    "preco": request.POST.get('preco')
+                }],
+            "pizzaria": {
+                "id": request.POST.get('pizzaria')
+                }
+                }
+        token = request.session['token']
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+        # URL do endpoint no back-end Java
+        java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria/' + id
+        # Enviando os dados para o back-end Java usando Curl
+        response = requests.put(java_backend_url, json=data, headers=headers)
+        print(response.text)
+        print(response)
+        print(response.status_code)
+
+        # Verificando a resposta
+        if response.status_code == 200:
+            # Lidar com a resposta do back-end Java
+            # (por exemplo, exibir uma mensagem de sucesso)
+            return redirect('/listar_pizzas_pizzarias/dados_atualizados')
+        else:
+            # Lidar com possíveis erros de solicitação
+            return HttpResponse("Erro ao enviar solicitação para o back-end Java.")
+        
+    token = request.session['token']
+    headers = {
+        'Authorization': f'Bearer {token}',
+    }
+    # Obter dados de pizzaPizzaria com id informado
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria/' + id
+    response = requests.get(java_backend_url, headers=headers)
+    dados_pizzaPizzaria = json.loads(response.text)
+
+    # Obter lista de pizzas cadastradas
+    java_backend_url = 'http://localhost:8080/v1/api/pizza'
+    response = requests.get(java_backend_url, headers=headers)
+    lista_pizzas = json.loads(response.text)
+    # filtra apenas as pizzas que não estão cadastradas para a pizzaPizzaria com id informado
+    lista_pizzas = [pizza for pizza in lista_pizzas if pizza['id'] != dados_pizzaPizzaria['pizza']['id']]
+    lista_pizzas.sort(key=lambda pizza: pizza['nome'].lower())
+
+    # Obter lista de pizzarias cadastradas
+    java_backend_url = 'http://localhost:8080/v1/api/pizzaria'
+    response = requests.get(java_backend_url, headers=headers)
+    lista_pizzarias = json.loads(response.text)
+    # filtra apenas as pizzarias que não estão cadastradas para a pizzaPizzaria com id informado
+    lista_pizzarias = [pizzaria for pizzaria in lista_pizzarias if pizzaria['id'] != dados_pizzaPizzaria['pizzaria']['id']]
+    lista_pizzarias.sort(key=lambda pizzaria: pizzaria['nome'].lower())
+    
+    contexto = {
+        'pizzas': lista_pizzas,
+        'pizzarias': lista_pizzarias,
+        'dados_pizzaPizzaria': dados_pizzaPizzaria,
+    }
+    if 'nome_usuario' in request.session:
+        contexto['nome_usuario'] = request.session['nome_usuario']
+    return render(request, 'editar_pizza_pizzaria.html', contexto)
 
 def excluir_pizza(request, id):
     token = request.session['token']
