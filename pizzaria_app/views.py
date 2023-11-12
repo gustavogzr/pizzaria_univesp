@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from pizzaria_app.models import Restaurante, Pizza, Tamanho
 from django.http import HttpResponse
 import requests
 import json

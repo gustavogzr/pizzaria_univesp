@@ -22,7 +22,7 @@ urlpatterns = [
     path('', pizzaria_app_views.index, name='index'),
     #
     path('login/', pizzaria_app_views.login, name='login'),
-    path('login/<str:redirect_from>/', pizzaria_app_views.login, name='login_id'),
+    path('login/<str:redirect_from>/', pizzaria_app_views.login, name='login_redirect'),
     path('logout/', pizzaria_app_views.logout, name='logout'),
 
     path('cadastrar_pizza/', pizzaria_app_views.cadastrar_pizza, name='cadastrar_pizza'),
