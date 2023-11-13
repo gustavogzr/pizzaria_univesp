@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.conf import settings
 import requests
 import json
 
@@ -15,7 +16,7 @@ def index(request):
         'Authorization': f'Bearer {token}',
     }
     # Obter lista de pizzas cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria'
     response = requests.get(java_backend_url, headers=headers)
     if response.status_code == 200:
         return redirect('/listar_pizzas_pizzarias')
@@ -34,7 +35,7 @@ def login(request, redirect_from=None):
         }
 
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/usuario/login'
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/usuario/login'
 
         # Enviando os dados para o back-end Java usando Curl
         response = requests.post(java_backend_url, json=data, headers={'Content-Type': 'application/json'})
@@ -85,7 +86,7 @@ def cadastrar_pizza(request):
             'Content-Type': 'application/json'
         }
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/pizza'
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza'
 
         # Enviando os dados para o back-end Java usando Curl
         response = requests.post(java_backend_url, json=data, headers=headers)
@@ -127,7 +128,7 @@ def cadastrar_pizzaria(request):
         }
 
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/pizzaria'
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria'
 
         # Enviando os dados para o back-end Java usando Curl
         response = requests.post(java_backend_url, json=data, headers=headers)
@@ -169,7 +170,7 @@ def cadastrar_pizza_pizzaria(request, redirect_from=None):
         }
 
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria'
 
         # Enviando os dados para o back-end Java usando Curl
         response = requests.post(java_backend_url, json=data, headers=headers)
@@ -188,13 +189,13 @@ def cadastrar_pizza_pizzaria(request, redirect_from=None):
         'Authorization': f'Bearer {token}',
     }
     # Obter lista de pizzas cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizza'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzas = json.loads(response.text)
     lista_pizzas.sort(key=lambda pizza: pizza['nome'].lower())
 
     # Obter lista de pizzarias cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzarias = json.loads(response.text)
     lista_pizzarias.sort(key=lambda pizzaria: pizzaria['nome'].lower())
@@ -215,7 +216,7 @@ def listar_pizzas(request, redirect_from=None):
         'Authorization': f'Bearer {token}',
     }
     # Obter lista de pizzas cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizza'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzas = json.loads(response.text)
     lista_pizzas.sort(key=lambda pizza: pizza['nome'].lower())
@@ -239,7 +240,7 @@ def listar_pizzarias(request, redirect_from=None):
         'Authorization': f'Bearer {token}',
     }
     # Obter lista de pizzas cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzarias = json.loads(response.text)
     lista_pizzarias.sort(key=lambda pizzaria: pizzaria['nome'].lower())
@@ -263,7 +264,7 @@ def listar_pizzas_pizzarias(request, redirect_from=None):
         'Authorization': f'Bearer {token}',
     }
     # Obter lista de pizzas cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzaPizzarias = json.loads(response.text)
     # ordenar a lista pelo preço (do menor para o maior)
@@ -298,7 +299,7 @@ def editar_pizza(request, id):
             'Content-Type': 'application/json'
         }
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza/' + id
         # Enviando os dados para o back-end Java usando Curl
         response = requests.put(java_backend_url, json=data, headers=headers)
 
@@ -317,7 +318,7 @@ def editar_pizza(request, id):
         'Authorization': f'Bearer {token}',
     }
     # Obter dados da pizza com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza/' + id
     response = requests.get(java_backend_url, headers=headers)
     dados_pizza = json.loads(response.text)
     contexto = {
@@ -344,7 +345,7 @@ def editar_pizzaria(request, id):
             'Content-Type': 'application/json'
         }
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria/' + id
         # Enviando os dados para o back-end Java usando Curl
         response = requests.put(java_backend_url, json=data, headers=headers)
 
@@ -363,7 +364,7 @@ def editar_pizzaria(request, id):
         'Authorization': f'Bearer {token}',
     }
     # Obter dados da pizza com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria/' + id
     response = requests.get(java_backend_url, headers=headers)
     dados_pizzaria = json.loads(response.text)
     contexto = {
@@ -375,37 +376,39 @@ def editar_pizzaria(request, id):
 
 def editar_pizza_pizzaria(request, id):
     if request.method == 'POST':
-        # data = {
-        #     "pizza": [{
-        #             "id": request.POST.get('pizza'),
-        #             "preco": request.POST.get('preco')
-        #         }],
-        #     "pizzaria": {
-        #         "id": request.POST.get('pizzaria')
-        #         }
-        #         }
+        # buscar IDs da pizza e da pizzaria do campo pizzaPizzaria
+        token = request.session['token']
+        headers = {
+        'Authorization': f'Bearer {token}',
+        }
+        # Obter dados de pizzaPizzaria com id informado
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria/' + id
+        response = requests.get(java_backend_url, headers=headers)
+        dados_pizzaPizzaria = json.loads(response.text)
+
         data = {
             "pizza": {
-                    "id": request.POST.get('pizza'),
+                    "id": dados_pizzaPizzaria['pizza']['id']
                 },
             "pizzaria": {
-                "id": request.POST.get('pizzaria')
-                },
-            "preco": request.POST.get('preco')
-                }
-        print(data)
-        token = request.session['token']
+                "id": dados_pizzaPizzaria['pizzaria']['id']
+                }}
+        preco_raw = request.POST.get('preco')
+        try:
+            # Tenta converter o valor para inteiro
+            preco = int(preco_raw)
+            data["preco"] = preco
+        except ValueError:
+            data["preco"] = 0
+        
         headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json'
         }
         # URL do endpoint no back-end Java
-        java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria/' + id
+        java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria/' + id
         # Enviando os dados para o back-end Java usando Curl
         response = requests.put(java_backend_url, json=data, headers=headers)
-        print(response.text)
-        print(response)
-        print(response.status_code)
 
         # Verificando a resposta
         if response.status_code == 200:
@@ -421,12 +424,12 @@ def editar_pizza_pizzaria(request, id):
         'Authorization': f'Bearer {token}',
     }
     # Obter dados de pizzaPizzaria com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria/' + id
     response = requests.get(java_backend_url, headers=headers)
     dados_pizzaPizzaria = json.loads(response.text)
 
     # Obter lista de pizzas cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizza'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzas = json.loads(response.text)
     # filtra apenas as pizzas que não estão cadastradas para a pizzaPizzaria com id informado
@@ -434,7 +437,7 @@ def editar_pizza_pizzaria(request, id):
     lista_pizzas.sort(key=lambda pizza: pizza['nome'].lower())
 
     # Obter lista de pizzarias cadastradas
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzarias = json.loads(response.text)
     # filtra apenas as pizzarias que não estão cadastradas para a pizzaPizzaria com id informado
@@ -456,7 +459,7 @@ def excluir_pizza(request, id):
         'Authorization': f'Bearer {token}',
     }
     # URL do endpoint no back-end Java
-    java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza/' + id
     # Enviando os dados para o back-end Java usando Curl
     response = requests.delete(java_backend_url, headers=headers)
     if response.status_code == 200:
@@ -476,7 +479,7 @@ def excluir_pizzaria(request, id):
         'Authorization': f'Bearer {token}',
     }
     # URL do endpoint no back-end Java
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria/' + id
     # Enviando os dados para o back-end Java usando Curl
     response = requests.delete(java_backend_url, headers=headers)
     if response.status_code == 200:
@@ -495,7 +498,7 @@ def excluir_pizza_pizzaria(request, id):
         'Authorization': f'Bearer {token}',
     }
     # URL do endpoint no back-end Java
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria/' + id
     # Enviando os dados para o back-end Java usando Curl
     response = requests.delete(java_backend_url, headers=headers)
     if response.status_code == 200:
@@ -514,12 +517,12 @@ def pizza(request, id):
         'Authorization': f'Bearer {token}',
     }
     # Obter dados da pizzaria com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizza/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizza/' + id
     response = requests.get(java_backend_url, headers=headers)
     dados_pizza = json.loads(response.text)
 
     # Obter lista de pizzas cadastradas para a pizzaria com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzaPizzarias = json.loads(response.text)
     lista_pizzaPizzarias = [pizzaria for pizzaria in lista_pizzaPizzarias if pizzaria['pizza']['id'] == id]
@@ -539,12 +542,12 @@ def pizzaria(request, id):
         'Authorization': f'Bearer {token}',
     }
     # Obter dados da pizzaria com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaria/' + id
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaria/' + id
     response = requests.get(java_backend_url, headers=headers)
     dados_pizzaria = json.loads(response.text)
 
     # Obter lista de pizzas cadastradas para a pizzaria com id informado
-    java_backend_url = 'http://localhost:8080/v1/api/pizzaPizzaria'
+    java_backend_url = settings.SERVER_BACKEND + 'v1/api/pizzaPizzaria'
     response = requests.get(java_backend_url, headers=headers)
     lista_pizzaPizzarias = json.loads(response.text)
     lista_pizzaPizzarias = [pizza for pizza in lista_pizzaPizzarias if pizza['pizzaria']['id'] == id]
