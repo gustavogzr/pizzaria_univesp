@@ -28,8 +28,16 @@ with open(os.path.join(BASE_DIR, 'key.txt')) as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_TRUSTED_ORIGINS = ['*']
+else:
+    ALLOWED_HOSTS = ['pizzacomparator.azurewebsites.net']
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_TRUSTED_ORIGINS = ['pizzacomparator.azurewebsites.net']
 
 # Application definition
 
@@ -131,5 +139,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Servidor backend
-SERVER_BACKEND = 'https://appcomparatorbackend.azurewebsites.net/'
-# SERVER_BACKEND = 'http://localhost:8080/'
+if DEBUG:
+    SERVER_BACKEND = 'http://localhost:8080/'
+else:
+    SERVER_BACKEND = 'https://appcomparatorbackend.azurewebsites.net/'
