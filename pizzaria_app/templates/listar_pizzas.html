@@ -42,7 +42,7 @@
         <tbody>
             {% for pizza in lista_pizzas %}
                 <tr>
-                    <td class="align-middle"><img src="{{ pizza.urlimagem }}" style="max-height: 40px;"></td>\
+                    <td class="align-middle"><img src="{{ pizza.urlimagem }}" style="max-height: 40px;"></td>
                     <td class="align-middle"><a href="/pizza/{{pizza.id}}">{{ pizza.nome }}</a></td>
                     <td class="align-middle">{{ pizza.categoria }}</td>
                     <td class="align-middle">{{ pizza.descricao }}</td>
